@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+option java_package="com.weds.socket.protobuf";
+option java_outer_classname = "Message";
+import "Command.proto";
+
+message MessageBase {
+  	required CommandType cmd = 2;
+  	optional int32 code = 3;
+  	optional string msg = 4;
+  	optional string data = 5;
+}

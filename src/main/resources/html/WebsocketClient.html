@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>WebSocket 客户端测试</title>
+    <style>
+        .message_box {
+            width: 46%;
+            height: 450px;
+            float: left;
+            border: 1px solid #ccc;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            margin-left: 30px;
+        }
+
+        .message_box p {
+            width: 100%;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    $(function () {
+
+        $('#btn').click(function () {
+            initSocket1();
+        });
+
+        function initSocket1() {
+            var socket;
+            if (!window.WebSocket) {
+                window.WebSocket = window.MozWebSocket;
+            }
+            if (window.WebSocket) {
+                socket = new WebSocket("ws://localhost:9098/websocket");
+                socket.onmessage = function (event) {
+                    var data = event.data;
+                    var ta = document.getElementById('responseText');
+                    ta.innerHTML += ('<p>' + data + '</p>');
+                };
+                socket.onopen = function (event) {
+                    var ta = document.getElementById('responseText');
+                    ta.value = "连接开启!";
+                };
+                socket.onclose = function (event) {
+                    var ta = document.getElementById('responseText');
+                    ta.innerHTML += ("<p>连接被关闭</p>");
+                };
+            } else {
+                alert("你的浏览器不支持 WebSocket！");
+            }
+        }
+
+        window.onbeforeunload = function (event) {
+            event.returnValue = "刷新提醒";
+        };
+
+    })
+</script>
+<form onsubmit="return false;">
+    <h3>数据接收列表：</h3>
+    <div id="responseText" class="message_box"></div>
+    <br/>
+    <input type="button" id="btn" value="开始接收"/>
+</form>
+<br/>
+<br/>
+</body>
+</html>

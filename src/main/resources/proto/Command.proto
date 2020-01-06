@@ -1,0 +1,40 @@
+syntax = "proto2";
+
+option java_package="com.weds.socket.protobuf";
+option java_outer_classname = "Command";
+
+/**
+ * 指令类型
+ */
+enum CommandType {
+	/**
+	 * 认证
+	 */
+	AUTH = 1;
+	/**
+	 * 心跳
+	 */
+	PING = 2;
+	/**
+     * 推送数据
+     */
+    PUSH_DATA = 3;
+	/**
+	 * 上传数据
+	 */
+	UPLOAD_DATA = 4;
+
+	/**
+	 * 认证返回
+	 */
+	AUTH_BACK = 11;
+	/**
+     * 心跳返回
+     */
+    PONG = 12;
+
+    PUSH_DATA_BACK = 13;
+
+	UPLOAD_DATA_BACK = 14;
+
+}
